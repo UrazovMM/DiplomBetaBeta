@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Fonts\Dongle-Bold.ttf" />
+    <None Remove="Fonts\Dongle-Regular.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.15">
       <PrivateAssets>all</PrivateAssets>
@@ -21,7 +26,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Windows\" />
+    <Resource Include="Fonts\Dongle-Bold.ttf" />
+    <Resource Include="Fonts\Dongle-Regular.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resourses\" />
+    <Folder Include="Styles\AuthStyle\" />
   </ItemGroup>
 
 </Project>

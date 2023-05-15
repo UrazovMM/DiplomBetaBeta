@@ -21,11 +21,11 @@
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
         </Style.Setters>
-        <Style.Triggers>
-            <Trigger Property="IsChecked" Value="True">
-                <Setter Property="Background" Value="#2f76e0"/>
-            </Trigger>
-        </Style.Triggers>
+            <Style.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Background" Value="#2f76e0"/>
+                </Trigger>
+            </Style.Triggers>
     </Style>
 
 </ResourceDictionary>

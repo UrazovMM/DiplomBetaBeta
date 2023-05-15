@@ -1,0 +1,41 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style TargetType="TextBox" x:Key="TextBoxNote">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+
+                    <Grid>
+
+                        <TextBox Width="580" Height="100"
+                                     x:Name="tbNote"
+                                     TextWrapping="Wrap"/>
+
+                        <TextBlock IsHitTestVisible="False"
+                                HorizontalAlignment="Left" VerticalAlignment="Stretch" TextDecorations="Underline">
+                                <Run Text="Примечание:"/>
+                                <Run Text="{Binding Notes}"/>
+                        </TextBlock>
+
+                        <TextBlock IsHitTestVisible="False" 
+                                       Text="введите текст" 
+                                       HorizontalAlignment="Left" Margin="80 0">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=tbNote}" Value="">
+                                            <Setter  Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                    <Setter Property="Visibility" Value="Hidden"/>
+
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+ 
+    </Style>
+</ResourceDictionary>

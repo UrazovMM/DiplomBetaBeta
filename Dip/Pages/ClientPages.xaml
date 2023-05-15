@@ -13,8 +13,10 @@
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="6*"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
+        <Button Grid.Row="2" Content="Добавить" Style="{StaticResource Button}" Width="400" Height="40"/>
 
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="Клиенты" FontSize="18" Margin="20 23" />
@@ -40,9 +42,7 @@
                 <ComboBoxItem Content="По убываниию"/>
                 <ComboBoxItem Content="По возрастанию"/>
             </ComboBox>
-
         </StackPanel>
-
 
         <ListView Grid.Row="1" Name="List" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Style="{StaticResource ListView}">
             <ListView.ItemsPanel>
@@ -56,12 +56,12 @@
                         <Border Width="200" Height="150" CornerRadius="10" Background="#72a9fc">
                             <StackPanel>
                                 <TextBlock>
-                        <Run Text="Компания клиента:"/>
-                        <Run Text="{Binding NameOrganisation}"/>
-                                </TextBlock>
-                                <TextBlock>
                         <Run Text="ФИО клиента:"/>
                         <Run Text="{Binding NameClient}"/>
+                                </TextBlock>
+                                <TextBlock>
+                        <Run Text="Компания клиента:"/>
+                        <Run Text="{Binding NameOrganisation}"/>
                                 </TextBlock>
 
                             </StackPanel>
