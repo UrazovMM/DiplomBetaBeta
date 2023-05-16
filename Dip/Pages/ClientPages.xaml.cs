@@ -23,7 +23,32 @@ namespace Dip.Pages
         public ClientPages()
         {
             InitializeComponent();
-            List.ItemsSource = EfModel.Init().Clients.ToList();
+            UpdateDate();
+        }
+        public async Task UpdateDate()
+        { 
+            IEnumerable<Client> clients = await Task.Run(()=> EfModel.Init().Clients.ToList());
+
+             
+            List.ItemsSource = clients;
+        }
+
+        private void btAdd_Click(object sender, RoutedEventArgs e)
+        {
+            new Windows.Add(new Client()).Show();
+        }
+
+        private void Card_Open(object sender, MouseButtonEventArgs e)
+        {
+            Client client = (sender as TextBlock).DataContext as Client;
+            new Windows.Card(client).ShowDialog();
+
+
+        }
+
+        private void UpdateChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+
         }
     }
 }

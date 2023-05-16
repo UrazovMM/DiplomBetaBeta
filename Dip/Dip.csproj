@@ -32,7 +32,6 @@
 
   <ItemGroup>
     <Folder Include="Resourses\" />
-    <Folder Include="Styles\AuthStyle\" />
   </ItemGroup>
 
 </Project>

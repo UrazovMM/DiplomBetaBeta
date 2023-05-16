@@ -19,9 +19,19 @@ namespace Dip.Windows
     /// </summary>
     public partial class Add : Window
     {
-        public Add()
+        Client Client;
+        public Add(Client client)
         {
+            this.Client= client;
+            DataContext = this;
             InitializeComponent();
+        }
+
+        private void btAdd_Click(object sender, RoutedEventArgs e)
+        {
+            EfModel.Init().Clients.Add(Client);
+            EfModel.Init().SaveChanges();
+            Close();
         }
     }
 }

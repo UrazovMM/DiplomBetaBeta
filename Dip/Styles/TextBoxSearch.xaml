@@ -24,7 +24,6 @@
                                        HorizontalAlignment="Left" Margin="10 0"
                                        FontSize="20">
 
-
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -33,7 +32,6 @@
                                             </DataTrigger>
                                         </Style.Triggers>
                                         <Setter Property="Visibility" Value="Hidden"/>
-
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>

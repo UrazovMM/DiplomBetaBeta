@@ -6,18 +6,18 @@
         xmlns:local="clr-namespace:Dip.Windows"
         mc:Ignorable="d"
         Title="Добавление" Height="450" Width="800">
-    <Grid >
+    <Grid Background="#6b95ff" >
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
-        <TextBox Text="Добавление" FontSize="40" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <TextBox Text="Добавление" FontSize="40" VerticalAlignment="Center" HorizontalAlignment="Center" Background="#6b95ff"/>
         <StackPanel Grid.Row="1" Width="300" >
-            <TextBlock Text="Имя клиента" FontSize="20" HorizontalAlignment="Center"/>
-            <TextBox FontSize="20" Text="{Binding NameClient}"/>
-            <TextBlock Text="Телефон" FontSize="20" HorizontalAlignment="Center"/>
+            <TextBlock Text="Имя клиента" FontSize="23" HorizontalAlignment="Center"/>
+            <TextBox FontSize="20" Text="{Binding NameClient}" />
+            <TextBlock Text="Телефон" FontSize="23" HorizontalAlignment="Center"/>
             <TextBox FontSize="20" Text="{Binding Phone}" />
-            <Button Content="Добавить" FontSize="25" Margin="10 40"/>
+            <Button Content="Добавить" FontSize="25" Margin="10 40" Style="{StaticResource Button}" Click="btAdd_Click" Cursor="Hand"/>
         </StackPanel>
     </Grid>
 </Window>

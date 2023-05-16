@@ -19,8 +19,11 @@ namespace Dip.Windows
     /// </summary>
     public partial class Card : Window
     {
-        public Card()
+        Client client;
+        public Card(Client client)
         {
+            this.client = client;
+            DataContext = client;
             InitializeComponent();
         }
     }

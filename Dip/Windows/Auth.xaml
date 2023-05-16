@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Dip.Windows"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Auth" Height="450" Width="450">
+        Title="Авторизация" Height="450" Width="450">
     <Grid Background="#6b95ff">
         <Grid.RowDefinitions>
             <RowDefinition/>
