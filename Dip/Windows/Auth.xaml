@@ -17,7 +17,7 @@
                        HorizontalAlignment="Center"/>
         </StackPanel>
         <StackPanel  Grid.Row="2" >
-        <TextBox Margin="0 20" Name="tbLogin">
+            <TextBox Margin="0 20" Name="tbLogin">
                 <TextBox.Style>
                     <Style TargetType="{x:Type TextBox}">
                         <Setter Property="Template">
@@ -64,7 +64,7 @@
                 </TextBox.Style>
             </TextBox>
 
-        <TextBox Margin="0 20" Name="tbPass" >
+            <TextBox Margin="0 20" Name="tbPass" >
                 <TextBox.Style>
                     <Style TargetType="{x:Type TextBox}">
                         <Setter Property="Template">
@@ -110,7 +110,7 @@
                     </Style>
                 </TextBox.Style>
             </TextBox>
-        <Button Width="250" Height="30" Content="Войти" Style="{StaticResource Button}" Click="btAauth_Click"/>
+            <Button Width="250" Height="30" Content="Войти" Style="{StaticResource Button}" Click="btAauth_Click"/>
         </StackPanel>
     </Grid>
 </Window>

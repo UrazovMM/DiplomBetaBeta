@@ -18,7 +18,7 @@
 
         <StackPanel Grid.Row="1">
             <RadioButton Content="Главная" FontSize="20" FontFamily="Fonts/#RobotoMono"  Height="50" Style="{StaticResource RadioButton}" Cursor="Hand" />
-            <RadioButton Content="Клиенты" FontSize="20" FontFamily="Fonts/#RobotoMono" Height="50" Style="{StaticResource RadioButton}" Click="rbClick_Client" Cursor="Hand"/>
+            <RadioButton Content="Клиенты" FontSize="20" FontFamily="Fonts/#RobotoMono" Height="50" Style="{StaticResource RadioButton}" Click="rbClick_Client" Cursor="Hand" Name="rbClient"/>
             <RadioButton Content="Сотрудники" FontSize="20" FontFamily="Fonts/#RobotoMono" Height="50" Style="{StaticResource RadioButton}" Cursor="Hand"  Click="rbClick_Worker"/>
         </StackPanel>
         <Frame Grid.Row="1" Grid.Column="1" Name="FR" NavigationUIVisibility="Hidden"/>

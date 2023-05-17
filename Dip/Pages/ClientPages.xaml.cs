@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace Dip.Pages
 {
@@ -25,11 +27,42 @@ namespace Dip.Pages
             InitializeComponent();
             UpdateDate();
         }
-        public async Task UpdateDate()
-        { 
-            IEnumerable<Client> clients = await Task.Run(()=> EfModel.Init().Clients.ToList());
+        DispatcherTimer timer = new DispatcherTimer();
+        private void Timer_Go(object sender, EventArgs e)
+        {
+            if (List.Items.Count>0)
+                timer.Stop();
+        }
+        private void StartLoad()
+        {
+            CircleLoading.Visibility = Visibility.Visible;
+            if (List.Items.Count>0)
+                timer.Tick -= Timer_Go;
+            timer.Interval = TimeSpan.FromMilliseconds(150);
+            timer.Tick += Timer_Go;
+            timer.Start();
+        }
+        private void StopLoad()
+        {
+            if (List.Items.Count>0)
+                timer.Tick -= Timer_Go;
+            timer.Stop();
+            CircleLoading.Visibility = Visibility.Collapsed;
+        }
+        private void StartAnimation()
+        {
+            ((Storyboard)CircleLoading.Resources["CircleLoad"]).Begin();
+        }
 
-             
+        private void StopAnimation()
+        {
+            ((Storyboard)CircleLoading.Resources["CircleLoad"]).Stop();
+        }
+        public async Task UpdateDate()
+        {
+            IEnumerable<Client> clients = await Task.Run(() => EfModel.Init().Clients.ToList());
+
+
             List.ItemsSource = clients;
         }
 
@@ -48,7 +81,15 @@ namespace Dip.Pages
 
         private void UpdateChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+            UpdateDate();
+        }
 
+        private void Loading_Pages(object sender, RoutedEventArgs e)
+        {
+            StartLoad();
+            StartAnimation();
+            StopLoad();
+            StopAnimation();
         }
     }
 }
