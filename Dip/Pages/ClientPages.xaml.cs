@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using System.Threading;
 
 namespace Dip.Pages
 {
@@ -25,45 +26,33 @@ namespace Dip.Pages
         public ClientPages()
         {
             InitializeComponent();
+            ((Storyboard)CircleLoading.Resources["CircleLoad"]).RepeatBehavior = RepeatBehavior.Forever;
+            ((Storyboard)CircleLoading.Resources["CircleLoad"]).SpeedRatio = 20;
+            ((Storyboard)CircleLoading.Resources["CircleLoad"]).Begin();
             UpdateDate();
-        }
-        DispatcherTimer timer = new DispatcherTimer();
-        private void Timer_Go(object sender, EventArgs e)
-        {
-            if (List.Items.Count>0)
-                timer.Stop();
-        }
-        private void StartLoad()
-        {
-            CircleLoading.Visibility = Visibility.Visible;
-            if (List.Items.Count>0)
-                timer.Tick -= Timer_Go;
-            timer.Interval = TimeSpan.FromMilliseconds(150);
-            timer.Tick += Timer_Go;
-            timer.Start();
-        }
-        private void StopLoad()
-        {
-            if (List.Items.Count>0)
-                timer.Tick -= Timer_Go;
-            timer.Stop();
-            CircleLoading.Visibility = Visibility.Collapsed;
         }
         private void StartAnimation()
         {
             ((Storyboard)CircleLoading.Resources["CircleLoad"]).Begin();
+            ((Storyboard)CircleLoading.Resources["CircleLoad"]).SpeedRatio = 20;
+            ((Storyboard)CircleLoading.Resources["CircleLoad"]).Begin();
+
         }
 
         private void StopAnimation()
         {
             ((Storyboard)CircleLoading.Resources["CircleLoad"]).Stop();
+            CircleLoading.Visibility = Visibility.Hidden;
         }
         public async Task UpdateDate()
         {
+         
+            
             IEnumerable<Client> clients = await Task.Run(() => EfModel.Init().Clients.ToList());
 
 
             List.ItemsSource = clients;
+            StopAnimation();
         }
 
         private void btAdd_Click(object sender, RoutedEventArgs e)
@@ -86,10 +75,6 @@ namespace Dip.Pages
 
         private void Loading_Pages(object sender, RoutedEventArgs e)
         {
-            StartLoad();
-            StartAnimation();
-            StopLoad();
-            StopAnimation();
         }
     }
 }
