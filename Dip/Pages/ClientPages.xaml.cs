@@ -35,7 +35,7 @@ namespace Dip.Pages
         {
             ((Storyboard)CircleLoading.Resources["CircleLoad"]).Begin();
             ((Storyboard)CircleLoading.Resources["CircleLoad"]).SpeedRatio = 20;
-            ((Storyboard)CircleLoading.Resources["CircleLoad"]).Begin();
+            
 
         }
 
