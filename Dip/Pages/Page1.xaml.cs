@@ -24,8 +24,7 @@ namespace Dip.Pages
         public Page1()
         {
             InitializeComponent();
-            
-            ((Storyboard)CircleLoading.Resources["CircleLoad"]).Begin();
+              
         }
     }
 }

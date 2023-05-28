@@ -26,17 +26,14 @@ namespace Dip.Pages
         public ClientPages()
         {
             InitializeComponent();
-            ((Storyboard)CircleLoading.Resources["CircleLoad"]).RepeatBehavior = RepeatBehavior.Forever;
-            ((Storyboard)CircleLoading.Resources["CircleLoad"]).SpeedRatio = 20;
-            ((Storyboard)CircleLoading.Resources["CircleLoad"]).Begin();
+            StartAnimation();
             UpdateDate();
         }
         private void StartAnimation()
         {
+            ((Storyboard)CircleLoading.Resources["CircleLoad"]).RepeatBehavior = RepeatBehavior.Forever;
+            ((Storyboard)CircleLoading.Resources["CircleLoad"]).SpeedRatio = 10;
             ((Storyboard)CircleLoading.Resources["CircleLoad"]).Begin();
-            ((Storyboard)CircleLoading.Resources["CircleLoad"]).SpeedRatio = 20;
-            
-
         }
 
         private void StopAnimation()
@@ -46,12 +43,10 @@ namespace Dip.Pages
         }
         public async Task UpdateDate()
         {
-         
-            
             IEnumerable<Client> clients = await Task.Run(() => EfModel.Init().Clients.ToList());
-
-
             List.ItemsSource = clients;
+
+          
             StopAnimation();
         }
 

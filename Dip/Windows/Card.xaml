@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Dip.Windows"
         mc:Ignorable="d"
-        Title="Card" Height="450" Width="800">
+        Title="Карточка клиента" Height="450" Width="800">
     <Grid Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -34,51 +34,23 @@
                         <TextBlock Text="Почта" Margin="0 2"/>
                         <TextBlock Text="Ответсвенный" Margin="0 2" />
                     </StackPanel>
-                    <StackPanel Grid.Column="1">
-
-                        
-                        <!--сделать так чтобы точки исчезали-->
-                        <TextBox Margin="0 20" Name="tbClient" Text="{Binding NameClient}">
-                            <TextBox.Style>
-                                <Style TargetType="{x:Type TextBox}">
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="{x:Type TextBox}">
-                                                <Grid>
-                                                    <TextBox Text="{TemplateBinding Text}"
-                                     Margin="2"
-                                     Background="Transparent"
-                                     VerticalContentAlignment="Center"
-                                     BorderThickness="0"
-                                     x:Name="tbLogin"/>
-                                                    
-                                                    <TextBlock IsHitTestVisible="False" 
-                                       FontFamily="Fonts/#RobotoMono"
-                                       Text="..." VerticalAlignment="Center"
-                                       HorizontalAlignment="Left" Margin="10 0"
-                                       FontSize="20">
-
-
-                                                        <TextBlock.Style>
-                                                            <Style TargetType="{x:Type TextBlock}">
-                                                                <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding Text, ElementName=tbClient}" Value="">
-                                                                        <Setter  Property="Visibility" Value="Visible"/>
-                                                                    </DataTrigger>
-                                                                </Style.Triggers>
-                                                                <Setter Property="Visibility" Value="Hidden"/>
-                                                            </Style>
-                                                        </TextBlock.Style>
-                                                    </TextBlock>
-                                                </Grid>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </TextBox.Style>
-                        </TextBox>
-
+                    <StackPanel Grid.Column="1" >
+                        <TextBox Text="{Binding NameClient}" Margin="0 6 0 0"/>
+                        <TextBox Text="{Binding NameOranisation}" Margin="0 2 0 0"/>
+                        <TextBox Text="{Binding Phone}"  Margin="0 2 0 0"/>
+                        <TextBox Text="{Binding Mail}" Margin="0 2 0 0"/>
+                        <!--починить вывод-->
+                        <ComboBox>
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Phone}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>>
+                        </ComboBox>
                     </StackPanel>
+                    <Button VerticalAlignment="Bottom" Content="Сохранить"  Margin="2 2" Cursor="Hand"/>
                 </Grid>
             </Border>
         </Grid>
@@ -102,7 +74,7 @@
                     <Button Content="Добавить" Height="25" Width="60"
                                         Background="Gray" x:Name="btNote" 
                                         HorizontalAlignment="Left"
-                                        VerticalAlignment="Bottom" Margin="20 10" >
+                                        VerticalAlignment="Bottom" Margin="20 10" Cursor="Hand" >
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
                                 <Setter Property="Cursor" Value="Hand"/>
