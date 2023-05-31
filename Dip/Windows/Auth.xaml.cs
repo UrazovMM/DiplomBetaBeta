@@ -26,12 +26,17 @@ namespace Dip.Windows
 
         private void btAauth_Click(object sender, RoutedEventArgs e)
         {
-            //if (EfModel.Init().Workers.Any(p => p.Login == tbLogin.Text && p.Password == tbPass.Text))
-            //{
-            //    Hide();
-            //}
-            MessageBox.Show("gdf");
-            new MainWindow().Show();
+            if (EfModel.Init().Workers.Any(p => p.Login == tbLogin.Text && p.Password == tbPass.Text))
+            {
+                MessageBox.Show("gdf");
+                new MainWindow().Show();
+                Hide();
+            }
+            else
+            {
+                MessageBox.Show("Неверный логин или пароль");
+            }
+
         }
     }
 }

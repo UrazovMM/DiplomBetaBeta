@@ -14,9 +14,13 @@
         <TextBox Text="Добавление" FontSize="40" VerticalAlignment="Center" HorizontalAlignment="Center" Background="#6b95ff"/>
         <StackPanel Grid.Row="1" Width="300" >
             <TextBlock Text="Имя клиента" FontSize="23" HorizontalAlignment="Center"/>
-            <TextBox FontSize="20" Text="{Binding NameClient}" />
-            <TextBlock Text="Телефон" FontSize="23" HorizontalAlignment="Center"/>
-            <TextBox FontSize="20" Text="{Binding Phone}" />
+            <Border CornerRadius="2">
+                <TextBox FontSize="20" Text="{Binding NameClient}" />
+            </Border>
+            <TextBlock Text="Имя организации" FontSize="23" HorizontalAlignment="Center"/>
+            <Border CornerRadius="2">
+                <TextBox FontSize="20" Text="{Binding NameOrganisation}" />
+            </Border>
             <Button Content="Добавить" FontSize="25" Margin="10 40" Style="{StaticResource Button}" Click="btAdd_Click" Cursor="Hand"/>
         </StackPanel>
     </Grid>

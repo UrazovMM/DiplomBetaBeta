@@ -26,13 +26,16 @@ namespace Dip.Pages
         public ClientPages()
         {
             InitializeComponent();
-            StartAnimation();
+            ((Storyboard)CircleLoading.Resources["CircleLoad"]).RepeatBehavior = RepeatBehavior.Forever;
+            ((Storyboard)CircleLoading.Resources["CircleLoad"]).SpeedRatio = 8;
+            ((Storyboard)CircleLoading.Resources["CircleLoad"]).Begin();
             UpdateDate();
         }
         private void StartAnimation()
         {
+
             ((Storyboard)CircleLoading.Resources["CircleLoad"]).RepeatBehavior = RepeatBehavior.Forever;
-            ((Storyboard)CircleLoading.Resources["CircleLoad"]).SpeedRatio = 10;
+            ((Storyboard)CircleLoading.Resources["CircleLoad"]).SpeedRatio = 8;
             ((Storyboard)CircleLoading.Resources["CircleLoad"]).Begin();
         }
 
@@ -43,10 +46,15 @@ namespace Dip.Pages
         }
         public async Task UpdateDate()
         {
-            IEnumerable<Client> clients = await Task.Run(() => EfModel.Init().Clients.ToList());
-            List.ItemsSource = clients;
-
-          
+            await Task.Run(() =>
+            {
+                IEnumerable<Client> clients = EfModel.Init().Clients.ToList();
+                Dispatcher.Invoke(() =>
+                {
+                    List.ItemsSource = clients;
+                });
+                Thread.Sleep(500);
+            });
             StopAnimation();
         }
 
@@ -68,8 +76,15 @@ namespace Dip.Pages
             UpdateDate();
         }
 
-        private void Loading_Pages(object sender, RoutedEventArgs e)
+        private void btDelete_Click(object sender, RoutedEventArgs e)
         {
+                Client delete_client = (sender as Button).DataContext as Client;
+                if (MessageBox.Show("Вы действительно хотите удалить клиента", "Удаление", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    EfModel.Init().Clients.Remove(delete_client);
+                    EfModel.Init().SaveChanges();
+                }
+                UpdateDate();
         }
     }
 }

@@ -24,6 +24,7 @@ namespace Dip.Windows
         {
             this.Client= client;
             DataContext = this;
+
             InitializeComponent();
         }
 

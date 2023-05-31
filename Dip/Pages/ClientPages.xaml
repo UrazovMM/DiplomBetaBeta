@@ -8,8 +8,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ClientPages"
-      IsEnabledChanged="UpdateChanged" 
-      Loaded="Loading_Pages">
+      IsEnabledChanged="UpdateChanged">
 
     <Grid>
 
@@ -20,7 +19,7 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Column="00">
-           
+
 
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Клиенты" FontSize="18" Margin="20 23" />
@@ -56,7 +55,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
-                        <Border Width="200" Height="150" CornerRadius="10" Background="#72a9fc">
+                        <Border Width="200" Height="100" CornerRadius="10" Background="#72a9fc">
                             <StackPanel>
                                 <TextBlock Text="{Binding NameClient}" MouseDown="Card_Open" Name="tbCleintName">
                                     <TextBlock.Style>
@@ -74,20 +73,19 @@
                         <Run Text="Компания клиента:"/>
                         <Run Text="{Binding NameOrganisation}"/>
                                 </TextBlock>
-
                             </StackPanel>
+                        </Border>
+                        <Border CornerRadius="10">
+                            <Button  Content="Удалить" Background="#2f76e0" Height="20" Click="btDelete_Click" VerticalAlignment="Bottom" Margin="20 0"  Cursor="Hand"/>
                         </Border>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
-        <local1:CircleLoad x:Name="CircleLoading" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center"/>
+        <local1:CircleLoad x:Name="CircleLoading" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" />
 
-        <StackPanel Grid.Row="2">
-            <Button  Content="Добавить" Style="{StaticResource Button}" Width="400" Height="40" Click="btAdd_Click"  />
-        </StackPanel>
+        <Button Grid.Row="2" Content=" Добавить " Style="{StaticResource Button}"  HorizontalAlignment="Center" Click="btAdd_Click" Margin="0 5" Cursor="Hand"/>
+
     </Grid>
-
-
 </Page>
