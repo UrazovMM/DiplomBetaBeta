@@ -39,7 +39,7 @@
                         </ToolTip>
                     </RadioButton.ToolTip>
                 </RadioButton>
-                <TextBox  Height="30" Style="{StaticResource TextBoxSearch}" Name="tbSearch" />
+                <TextBox  Height="30" Width="500" Style="{StaticResource TextBoxSearch}" Name="Searchtb222" TextChanged="Search" />
             </StackPanel>
 
         </Grid>

@@ -15,8 +15,7 @@
                             <TextBox Text="{TemplateBinding Text}"
                                      Margin="2"
                                      Background="Transparent"
-                                     VerticalContentAlignment="Center"
-                                     BorderThickness="0"
+                                     VerticalContentAlignment="Center" 
                                      x:Name="tbSearch"/>
 
                             <TextBlock IsHitTestVisible="False" 

@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Dip.Windows
 {
@@ -28,15 +30,14 @@ namespace Dip.Windows
         {
             if (EfModel.Init().Workers.Any(p => p.Login == tbLogin.Text && p.Password == tbPass.Text))
             {
-                MessageBox.Show("gdf");
                 new MainWindow().Show();
                 Hide();
+                MessageBox.Show("gdf");
             }
             else
             {
                 MessageBox.Show("Неверный логин или пароль");
             }
-
         }
     }
 }

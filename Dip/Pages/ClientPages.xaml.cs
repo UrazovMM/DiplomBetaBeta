@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using System.Threading;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dip.Pages
 {
@@ -26,10 +27,13 @@ namespace Dip.Pages
         public ClientPages()
         {
             InitializeComponent();
-            ((Storyboard)CircleLoading.Resources["CircleLoad"]).RepeatBehavior = RepeatBehavior.Forever;
-            ((Storyboard)CircleLoading.Resources["CircleLoad"]).SpeedRatio = 8;
-            ((Storyboard)CircleLoading.Resources["CircleLoad"]).Begin();
-            UpdateDate();
+            //((Storyboard)CircleLoading.Resources["CircleLoad"]).RepeatBehavior = RepeatBehavior.Forever;
+            //((Storyboard)CircleLoading.Resources["CircleLoad"]).SpeedRatio = 8;
+            //((Storyboard)CircleLoading.Resources["CircleLoad"]).Begin();
+            //UpdateData();
+            UPdate();
+
+
         }
         private void StartAnimation()
         {
@@ -44,20 +48,46 @@ namespace Dip.Pages
             ((Storyboard)CircleLoading.Resources["CircleLoad"]).Stop();
             CircleLoading.Visibility = Visibility.Hidden;
         }
-        public async Task UpdateDate()
+
+
+
+        //2:75 3:00 реакция тимура 
+        private void LoadData()
         {
-            await Task.Run(() =>
-            {
-                IEnumerable<Client> clients = EfModel.Init().Clients.ToList();
-                Dispatcher.Invoke(() =>
-                {
-                    List.ItemsSource = clients;
-                });
-                Thread.Sleep(500);
-            });
+            Thread LoadingData = new Thread(UpdateData);
+            LoadingData.Start(UpdateData);
+        }
+        public void UpdateData()
+        {
+            IEnumerable<Client> Clients = EfModel.Init().Clients.Where(p => p.NameClient.Contains(Searchtb222.Text)).ToList();
+            List.ItemsSource = Clients;
+
             StopAnimation();
         }
 
+
+        //// 2:89 time
+        //public async Task UpdateData()
+        //{
+
+        //    await Task.Run(() =>
+        //    {
+        //        IEnumerable<Client> clients = EfModel.Init().Clients.ToList();
+        //        Dispatcher.Invoke(() =>
+        //        {
+        //            List.ItemsSource = clients;
+        //            Task.Delay(10);
+        //        });
+        //    });
+        //    StopAnimation();
+        //}
+
+        //просто без асинх
+        public void UPdate()
+        {
+           List.ItemsSource = EfModel.Init().Clients.Where(p => p.NameClient.Contains(Searchtb222.Text)).ToList();
+  
+        }
         private void btAdd_Click(object sender, RoutedEventArgs e)
         {
             new Windows.Add(new Client()).Show();
@@ -73,18 +103,25 @@ namespace Dip.Pages
 
         private void UpdateChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            UpdateDate();
+            UpdateData();
         }
 
         private void btDelete_Click(object sender, RoutedEventArgs e)
         {
-                Client delete_client = (sender as Button).DataContext as Client;
-                if (MessageBox.Show("Вы действительно хотите удалить клиента", "Удаление", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                {
-                    EfModel.Init().Clients.Remove(delete_client);
-                    EfModel.Init().SaveChanges();
-                }
-                UpdateDate();
+            Client delete_client = (sender as Button).DataContext as Client;
+            if (MessageBox.Show("Вы действительно хотите удалить клиента", "Удаление", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                EfModel.Init().Clients.Remove(delete_client);
+                EfModel.Init().SaveChanges();
+            }
+            UpdateData();
+        }
+
+        private void Search(object sender, TextChangedEventArgs e)
+        {
+            // UpdateData();
+            UPdate();
         }
     }
 }
+
