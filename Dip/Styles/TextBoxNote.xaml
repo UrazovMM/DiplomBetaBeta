@@ -11,15 +11,10 @@
                                      x:Name="tbNote"
                                      TextWrapping="Wrap"/>
 
-                        <TextBlock IsHitTestVisible="False"
-                                HorizontalAlignment="Left" VerticalAlignment="Stretch" TextDecorations="Underline">
-                                <Run Text="Примечание:"/>
-                                <Run Text="{Binding Notes}"/>
-                        </TextBlock>
-
                         <TextBlock IsHitTestVisible="False" 
-                                       Text="введите текст" 
-                                       HorizontalAlignment="Left" Margin="80 0">
+                                       Text="Введите текст" 
+                                       HorizontalAlignment="Left"  >
+                       
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Style.Triggers>
@@ -28,7 +23,6 @@
                                         </DataTrigger>
                                     </Style.Triggers>
                                     <Setter Property="Visibility" Value="Hidden"/>
-
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
