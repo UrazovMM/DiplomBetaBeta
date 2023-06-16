@@ -40,15 +40,22 @@
                         <TextBox Text="{Binding Phone}"  Margin="0 2 0 0"/>
                         <TextBox Text="{Binding Mail}" Margin="0 2 0 0"/>
                         <!--починить вывод-->
-                        <ComboBox >
+                        <ComboBox Name="Cb_worker" IsEnabled="True" IsReadOnly="False" >
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Vertical" ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel>
+                                    <StackPanel Orientation="Vertical">
                                         <TextBlock Text="{Binding WorkerWorker.NameWorker}"/>
                                     </StackPanel>
                                 </DataTemplate>
-                            </ComboBox.ItemTemplate>>
+                            </ComboBox.ItemTemplate>
                         </ComboBox>
+                        
+                        
                     </StackPanel>
                     <Button VerticalAlignment="Bottom" Content="Сохранить"  Margin="2 2" Cursor="Hand"/>
                 </Grid>

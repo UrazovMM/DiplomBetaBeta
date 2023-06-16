@@ -23,7 +23,7 @@ namespace Dip.Windows
         public Add(Client client)
         {
             this.Client= client;
-            DataContext = this;
+            DataContext = Client;
 
             InitializeComponent();
         }

@@ -9,39 +9,93 @@
       Title="fefw">
 
     <Grid>
-        <TextBox VerticalAlignment="Bottom" Name="Searchtb222" TextChanged="searchtestnaxui"/>
-        <ListView Name="List" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Style="{StaticResource ListView}" Margin="0,56,0,56" >
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Horizontal"/>
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Border Width="200" Height="100" CornerRadius="10" Background="#72a9fc">
-                            <StackPanel>
-                                <TextBlock Text="{Binding NameClient}" Name="tbCleintName">
-                                    <TextBlock.Style>
-                                        <Style TargetType="TextBlock">
-                                            <Style.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Foreground" Value="#052be8"/>
-                                                    <Setter Property="TextDecorations" Value="Underline"/>
-                                                </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                                <TextBlock>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+
+            <TextBox VerticalAlignment="Bottom" Name="Searchtb222" Width="500"  TextChanged="searchtestnaxui" >
+                <TextBox.Style>
+                    <Style TargetType="{x:Type TextBox}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="TextBox">
+                                    <Border CornerRadius="5"
+                            Background="#707eff"
+                            Height="30"
+                            Width="500"
+                            >
+
+                                        <Grid>
+                                            <TextBox Text="{TemplateBinding Text}"
+                                     Margin="2"
+                                     Background="Transparent"
+                                     VerticalContentAlignment="Center" 
+                                     x:Name="tbSearch"/>
+
+                                            <TextBlock IsHitTestVisible="False" 
+                                       FontFamily="Fonts/#RobotoMono"
+                                       Text="Поиск" VerticalAlignment="Center"
+                                       HorizontalAlignment="Left" Margin="10 0"
+                                       FontSize="20">
+
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Text, ElementName=tbSearch}" Value="">
+                                                                <Setter  Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                        <Setter Property="Visibility" Value="Hidden"/>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </Grid>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+
+
+
+            <ListView Name="List" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Style="{StaticResource ListView}" Grid.Row="1" >
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Border Width="200" Height="100" CornerRadius="10" Background="#72a9fc">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding NameClient}" Name="tbCleintName">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Foreground" Value="#052be8"/>
+                                                        <Setter Property="TextDecorations" Value="Underline"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                    <TextBlock>
                         <Run Text="Компания клиента:"/>
                         <Run Text="{Binding NameOrganisation}"/>
-                                </TextBlock>
-                            </StackPanel>
-                        </Border>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
     </Grid>
 </Page>

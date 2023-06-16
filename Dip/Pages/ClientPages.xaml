@@ -18,9 +18,11 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Column="00">
 
+        <Grid Grid.Column="0">
 
+         
+                
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Клиенты" FontSize="18" Margin="20 23" />
                 <RadioButton Content="||" FontSize="20" Height="30" Style="{StaticResource RadioButton}" Margin="10 5" Cursor="Hand"  >
@@ -39,8 +41,9 @@
                         </ToolTip>
                     </RadioButton.ToolTip>
                 </RadioButton>
-                <TextBox  Height="30" Width="500" Style="{StaticResource TextBoxSearch}" Name="Searchtb222" TextChanged="Search" />
+                <TextBox  Height="30" Width="500"  Name="Searchtb222" TextChanged="Search"/>
             </StackPanel>
+  
 
         </Grid>
 

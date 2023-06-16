@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,8 +24,10 @@ namespace Dip.Windows
         public Card(Client client)
         {
             this.client = client;
-            DataContext = client;
             InitializeComponent();
+            DataContext = client;
+           Cb_worker.ItemsSource =EfModel.Init().Clients.Include(p=>p.WorkerWorker).Where(p=>p.WorkerWorkerId==client.WorkerWorkerId).ToList();
+          
         }
     }
 }

@@ -30,8 +30,8 @@ namespace Dip.Pages
             //((Storyboard)CircleLoading.Resources["CircleLoad"]).RepeatBehavior = RepeatBehavior.Forever;
             //((Storyboard)CircleLoading.Resources["CircleLoad"]).SpeedRatio = 8;
             //((Storyboard)CircleLoading.Resources["CircleLoad"]).Begin();
-            //UpdateData();
-            UPdate();
+            UpdateData();
+          
 
 
         }
@@ -51,15 +51,16 @@ namespace Dip.Pages
 
 
 
-        //2:75 3:00 реакция тимура 
+        //2:75 
         private void LoadData()
         {
             Thread LoadingData = new Thread(UpdateData);
             LoadingData.Start(UpdateData);
+
         }
         public void UpdateData()
         {
-            IEnumerable<Client> Clients = EfModel.Init().Clients.Where(p => p.NameClient.Contains(Searchtb222.Text)).ToList();
+            IEnumerable<Client> Clients = EfModel.Init().Clients.Include(p=>p.WorkerWorker).Where(p => p.NameClient.Contains(Searchtb222.Text)).ToList();
             List.ItemsSource = Clients;
 
             StopAnimation();
@@ -77,17 +78,12 @@ namespace Dip.Pages
         //        {
         //            List.ItemsSource = clients;
         //            Task.Delay(10);
+        //            StopAnimation();
         //        });
         //    });
-        //    StopAnimation();
         //}
 
-        //просто без асинх
-        public void UPdate()
-        {
-           List.ItemsSource = EfModel.Init().Clients.Where(p => p.NameClient.Contains(Searchtb222.Text)).ToList();
-  
-        }
+
         private void btAdd_Click(object sender, RoutedEventArgs e)
         {
             new Windows.Add(new Client()).Show();
@@ -97,8 +93,6 @@ namespace Dip.Pages
         {
             Client client = (sender as TextBlock).DataContext as Client;
             new Windows.Card(client).ShowDialog();
-
-
         }
 
         private void UpdateChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -119,8 +113,7 @@ namespace Dip.Pages
 
         private void Search(object sender, TextChangedEventArgs e)
         {
-            // UpdateData();
-            UPdate();
+            UpdateData(); 
         }
     }
 }
