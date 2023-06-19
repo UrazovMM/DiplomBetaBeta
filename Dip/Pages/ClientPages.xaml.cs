@@ -16,6 +16,9 @@ using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using System.Threading;
 using Microsoft.EntityFrameworkCore;
+using Excel = Microsoft.Office.Interop.Excel;
+using Microsoft.Win32;
+using System.IO;
 
 namespace Dip.Pages
 {
@@ -31,7 +34,8 @@ namespace Dip.Pages
             //((Storyboard)CircleLoading.Resources["CircleLoad"]).SpeedRatio = 8;
             //((Storyboard)CircleLoading.Resources["CircleLoad"]).Begin();
             UpdateData();
-          
+
+
 
 
         }
@@ -60,10 +64,13 @@ namespace Dip.Pages
         }
         public void UpdateData()
         {
-            IEnumerable<Client> Clients = EfModel.Init().Clients.Include(p=>p.WorkerWorker).Where(p => p.NameClient.Contains(Searchtb222.Text)).ToList();
+            IEnumerable<Client> Clients = EfModel.Init().Clients.Include(p => p.WorkerWorker).Where(p => p.NameClient.Contains(Searchtb222.Text)).ToList();
             List.ItemsSource = Clients;
 
             StopAnimation();
+
+
+            dgw.ItemsSource = EfModel.Init().Clients.Include(p => p.WorkerWorker).Where(p => p.NameClient.Contains(Searchtb222.Text)).ToList();
         }
 
 
@@ -113,7 +120,67 @@ namespace Dip.Pages
 
         private void Search(object sender, TextChangedEventArgs e)
         {
-            UpdateData(); 
+            UpdateData();
+        }
+
+        private void copyAlltoClipboard()
+        {
+            dgw.SelectAll();
+            Clipboard.SetDataObject(dgw);
+        }
+        private void releaseObject(object obj)
+        {
+            try
+            {
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
+                obj = null;
+            }
+            catch (Exception ex)
+            {
+                obj = null;
+                MessageBox.Show("Exception Occurred while releasing object " + ex.ToString());
+            }
+            finally
+            {
+                GC.Collect();
+            }
+        }
+        private void btExport_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Excel Documents (*.xls)|*.xlsx";
+            saveFileDialog.FileName = ".xls";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                copyAlltoClipboard();
+
+                object misValue = System.Reflection.Missing.Value;
+                Excel.Application ExcelFile = new Excel.Application();
+
+                ExcelFile.DisplayAlerts=true;
+                Excel.Workbook workBook = ExcelFile.Workbooks.Add(misValue);
+                Excel.Worksheet workSheet = (Excel.Worksheet)workBook.Worksheets.GetEnumerator();
+
+                Excel.Range PasteFromBuffer=(Excel.Range) workSheet.Cells[1,1];
+                PasteFromBuffer.Select();
+                workSheet.PasteSpecial(PasteFromBuffer, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+
+                workBook.SaveAs(saveFileDialog.FileName, Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, 
+                    misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+
+                ExcelFile.DisplayAlerts = true;
+                workBook.Close(true, misValue, misValue);
+                ExcelFile.Quit();
+
+                releaseObject(workBook);
+                releaseObject(workSheet);
+                releaseObject(ExcelFile);
+
+                Clipboard.Clear();
+              
+               if(File.Exists(saveFileDialog.FileName))
+                    System.Diagnostics.Process.Start(saveFileDialog.FileName);
+            }
         }
     }
 }
