@@ -14,6 +14,8 @@ using System.Windows.Shapes;
 using System.Threading.Tasks;
 using System.Threading;
 using Microsoft.EntityFrameworkCore;
+using Dip.Class;
+using System.Diagnostics;
 
 namespace Dip.Windows
 {
@@ -22,32 +24,32 @@ namespace Dip.Windows
     /// </summary>
     public partial class Auth : Window
     {
+        public static int autorizeID;
         public Auth()
         {
             InitializeComponent();
         }
 
-        //public async Task<bool> AutorizeAsync(string UserLogin, string UserPasssword)
-        //{
-        //   var user= await Task.Run(() =>
-        //      {
-        //          if (EfModel.Init().Workers.AnyAsync(p => p.Login == UserLogin && p.Password == UserPasssword))
-        //          {
-        //              new MainWindow().Show();
-        //              Hide();
-        //              MessageBox.Show("Добро пожаловать");
-        //          }
-        //          else
-        //          {
-        //              MessageBox.Show("Неверный логин или пароль");
-        //          }
-        //          return user;
-
-        //      });
-        //}
+        public async Task<bool> AutorizeAsync(string UserLogin, string UserPasssword)
+        {
+            var user = await Task.Run(() =>
+            EfModel.Init().Workers.FirstOrDefaultAsync(p => p.Login == UserLogin && p.Password == UserPasssword));
+            return user != null;
+            
+            
+        }
         private void btAauth_Click(object sender, RoutedEventArgs e)
         {
-           ////AutorizeAsync(tbLogin.Text, tbPass.Text);
+            try
+            {
+                AutorizeAsync(tbLogin.Text, tbPass.Text);
+                MessageBox.Show("");
+                new MainWindow().Show();
+            }
+            catch
+            {
+                MessageBox.Show("неверный логин или пароль");
+            }
         }
     }
 }

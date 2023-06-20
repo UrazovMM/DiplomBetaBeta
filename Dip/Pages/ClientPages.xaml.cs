@@ -183,7 +183,6 @@ namespace Dip.Pages
             {
                 copyAlltoClipboard();
 
-
                 object misValue = System.Reflection.Missing.Value;
                 Excel.Application ExcelFile = new Excel.Application();
 
@@ -210,6 +209,8 @@ namespace Dip.Pages
 
                 if (File.Exists(saveFileDialog.FileName))
                     System.Diagnostics.Process.Start(saveFileDialog.FileName);
+              
+               
             }
         }
     }

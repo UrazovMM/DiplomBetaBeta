@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dip.Class;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,14 +28,14 @@ namespace Dip.Windows
 
         private void btAdd_Click(object sender, RoutedEventArgs e)
         {
-            
+
 
             Client client = new Client()
             {
                 DateCreate = dateAdd,
-                NameClient=tbNameClient.Text,
-                NameOrganisation=tbNameOrganisation.Text,
-
+                NameClient = tbNameClient.Text,
+                NameOrganisation = tbNameOrganisation.Text,
+                WorkerWorkerId = Auth.autorizeID
             };
             EfModel.Init().Clients.Add(client);
             EfModel.Init().SaveChanges();
