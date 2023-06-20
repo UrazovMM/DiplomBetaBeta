@@ -9,7 +9,7 @@
 
                         <Grid>
                             <TextBlock Text="{TemplateBinding Content}" HorizontalAlignment="Center"
-                                       VerticalAlignment="Center" FontSize="30"/>
+                                       VerticalAlignment="Center" FontSize="{TemplateBinding FontSize}"/>
                         </Grid>
                     </Border>
                 </ControlTemplate>

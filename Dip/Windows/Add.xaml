@@ -15,11 +15,11 @@
         <StackPanel Grid.Row="1" Width="300" >
             <TextBlock Text="Имя клиента" FontSize="23" HorizontalAlignment="Center"/>
             <Border CornerRadius="2">
-                <TextBox FontSize="20" Text="{Binding NameClient}" />
+                <TextBox FontSize="20" Text="{Binding NameClient}" Name="tbNameClient" />
             </Border>
             <TextBlock Text="Имя организации" FontSize="23" HorizontalAlignment="Center"/>
             <Border CornerRadius="2">
-                <TextBox FontSize="20" Text="{Binding NameOrganisation}" />
+                <TextBox FontSize="20" Text="{Binding NameOrganisation}"  Name="tbNameOrganisation"/>
             </Border>
             <Button Content="Добавить" FontSize="25" Margin="10 40" Style="{StaticResource Button}" Click="btAdd_Click" Cursor="Hand"/>
         </StackPanel>

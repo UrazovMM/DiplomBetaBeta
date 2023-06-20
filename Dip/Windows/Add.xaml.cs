@@ -19,18 +19,24 @@ namespace Dip.Windows
     /// </summary>
     public partial class Add : Window
     {
-        Client Client;
-        public Add(Client client)
+       DateTime dateAdd=DateTime.Now;
+        public Add()
         {
-            this.Client= client;
-            DataContext = Client;
-
             InitializeComponent();
         }
 
         private void btAdd_Click(object sender, RoutedEventArgs e)
         {
-            EfModel.Init().Clients.Add(Client);
+            
+
+            Client client = new Client()
+            {
+                DateCreate = dateAdd,
+                NameClient=tbNameClient.Text,
+                NameOrganisation=tbNameOrganisation.Text,
+
+            };
+            EfModel.Init().Clients.Add(client);
             EfModel.Init().SaveChanges();
             Close();
         }

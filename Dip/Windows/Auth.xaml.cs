@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Threading.Tasks;
 using System.Threading;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dip.Windows
 {
@@ -26,18 +27,27 @@ namespace Dip.Windows
             InitializeComponent();
         }
 
+        //public async Task<bool> AutorizeAsync(string UserLogin, string UserPasssword)
+        //{
+        //   var user= await Task.Run(() =>
+        //      {
+        //          if (EfModel.Init().Workers.AnyAsync(p => p.Login == UserLogin && p.Password == UserPasssword))
+        //          {
+        //              new MainWindow().Show();
+        //              Hide();
+        //              MessageBox.Show("Добро пожаловать");
+        //          }
+        //          else
+        //          {
+        //              MessageBox.Show("Неверный логин или пароль");
+        //          }
+        //          return user;
+
+        //      });
+        //}
         private void btAauth_Click(object sender, RoutedEventArgs e)
         {
-            //if (EfModel.Init().Workers.Any(p => p.Login == tbLogin.Text && p.Password == tbPass.Text))
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Неверный логин или пароль");
-            //}
-            //{
-                new MainWindow().Show();
-                Hide();
-                MessageBox.Show("gdf");
+           ////AutorizeAsync(tbLogin.Text, tbPass.Text);
         }
     }
 }

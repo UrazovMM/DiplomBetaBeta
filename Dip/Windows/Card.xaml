@@ -36,7 +36,7 @@
                     </StackPanel>
                     <StackPanel Grid.Column="1" >
                         <TextBox Text="{Binding NameClient}" Margin="0 6 0 0"/>
-                        <TextBox Text="{Binding NameOranisation}" Margin="0 2 0 0"/>
+                        <TextBox Text="{Binding NameOrganisation}" Margin="0 2 0 0"/>
                         <TextBox Text="{Binding Phone}"  Margin="0 2 0 0"/>
                         <TextBox Text="{Binding Mail}" Margin="0 2 0 0"/>
                         <!--починить вывод-->
@@ -56,7 +56,7 @@
                         </ComboBox>
                                                
                     </StackPanel>
-                    <Button VerticalAlignment="Bottom" Content="Сохранить"  Margin="2 2" Cursor="Hand"/>
+                    <Button VerticalAlignment="Bottom" Content="Сохранить"  Margin="2 2" Cursor="Hand" Style="{StaticResource Button}" FontSize="15"/>
                 </Grid>
             </Border>
         </Grid>

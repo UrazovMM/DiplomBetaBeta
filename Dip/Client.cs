@@ -14,7 +14,7 @@ namespace Dip
         public string? NameClient { get; set; }
         public string? NameOrganisation { get; set; }
         public DateTime DateCreate { get; set; }
-        public int Phone { get; set; }
+        public long Phone { get; set; }
         public string? Mail { get; set; }
         public int? WorkerWorkerId { get; set; }
 

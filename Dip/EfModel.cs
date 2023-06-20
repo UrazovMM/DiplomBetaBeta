@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -9,12 +8,7 @@ namespace Dip
     public partial class EfModel : DbContext
     {
         private static EfModel _instance;
-        public static EfModel  Init()
-        {
-            if(_instance == null) 
-                _instance = new EfModel();
-            return _instance;
-        }
+        public static EfModel Init() => _instance ?? (_instance = new EfModel());
         public EfModel()
         {
         }

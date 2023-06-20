@@ -17,8 +17,10 @@ using System.Windows.Threading;
 using System.Threading;
 using Microsoft.EntityFrameworkCore;
 using Excel = Microsoft.Office.Interop.Excel;
+using System.Diagnostics;
 using Microsoft.Win32;
 using System.IO;
+using System.Data;
 
 namespace Dip.Pages
 {
@@ -30,21 +32,22 @@ namespace Dip.Pages
         public ClientPages()
         {
             InitializeComponent();
-            //((Storyboard)CircleLoading.Resources["CircleLoad"]).RepeatBehavior = RepeatBehavior.Forever;
-            //((Storyboard)CircleLoading.Resources["CircleLoad"]).SpeedRatio = 8;
-            //((Storyboard)CircleLoading.Resources["CircleLoad"]).Begin();
-            UpdateData();
-
-
-
-
-        }
-        private void StartAnimation()
-        {
-
             ((Storyboard)CircleLoading.Resources["CircleLoad"]).RepeatBehavior = RepeatBehavior.Forever;
             ((Storyboard)CircleLoading.Resources["CircleLoad"]).SpeedRatio = 8;
             ((Storyboard)CircleLoading.Resources["CircleLoad"]).Begin();
+            UpdateData();
+
+        }
+        private async void StartAnimation()
+        {
+            await Task.Run(() =>
+            {
+                ((Storyboard)CircleLoading.Resources["CircleLoad"]).RepeatBehavior = RepeatBehavior.Forever;
+                ((Storyboard)CircleLoading.Resources["CircleLoad"]).SpeedRatio = 8;
+                ((Storyboard)CircleLoading.Resources["CircleLoad"]).Begin();
+
+            }
+            );
         }
 
         private void StopAnimation()
@@ -56,44 +59,48 @@ namespace Dip.Pages
 
 
         //2:75 
-        private void LoadData()
-        {
-            Thread LoadingData = new Thread(UpdateData);
-            LoadingData.Start(UpdateData);
+        //private void LoadData()
+        //{
+        //    Thread LoadingData = new Thread(UpdateData);
+        //    LoadingData.Start(UpdateData);
 
-        }
-        public void UpdateData()
-        {
-            IEnumerable<Client> Clients = EfModel.Init().Clients.Include(p => p.WorkerWorker).Where(p => p.NameClient.Contains(Searchtb222.Text)).ToList();
-            List.ItemsSource = Clients;
+        //}
+        //public void UpdateData()
+        //{
+        //    IEnumerable<Client> Clients = EfModel.Init().Clients.Include(p => p.WorkerWorker).Where(p => p.NameClient.Contains(Searchtb222.Text)).ToList();
+        //    List.ItemsSource = Clients;
 
-            StopAnimation();
+        //    StopAnimation();
 
 
-            dgw.ItemsSource = EfModel.Init().Clients.Include(p => p.WorkerWorker).Where(p => p.NameClient.Contains(Searchtb222.Text)).ToList();
-        }
+        //    dgw.ItemsSource = EfModel.Init().Clients.ToList();
+        //}
 
 
         //// 2:89 time
-        //public async Task UpdateData()
-        //{
+        public async Task UpdateData()
+        {
 
-        //    await Task.Run(() =>
-        //    {
-        //        IEnumerable<Client> clients = EfModel.Init().Clients.ToList();
-        //        Dispatcher.Invoke(() =>
-        //        {
-        //            List.ItemsSource = clients;
-        //            Task.Delay(10);
-        //            StopAnimation();
-        //        });
-        //    });
-        //}
+            try
+            {
+                var clients = await EfModel.Init().Clients.Where(p => p.NameClient.Contains(Searchtb222.Text)).ToListAsync();
+
+                List.ItemsSource = clients;
+
+                dgw.ItemsSource = EfModel.Init().Clients.ToList();
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            StopAnimation();
+        }
 
 
         private void btAdd_Click(object sender, RoutedEventArgs e)
         {
-            new Windows.Add(new Client()).Show();
+            new Windows.Add().Show();
         }
 
         private void Card_Open(object sender, MouseButtonEventArgs e)
@@ -118,15 +125,37 @@ namespace Dip.Pages
             UpdateData();
         }
 
-        private void Search(object sender, TextChangedEventArgs e)
+        private async void Search(object sender, TextChangedEventArgs e)
         {
-            UpdateData();
+            await UpdateData();
         }
 
         private void copyAlltoClipboard()
         {
-            dgw.SelectAll();
-            Clipboard.SetDataObject(dgw);
+
+            // replace with your DataGrid name
+            var selectedRows = dgw.SelectedItems;
+            if (selectedRows.Count > 0)
+            {
+                var stringBuilder = new StringBuilder();
+                foreach (var item in selectedRows)
+                {
+                    var row = item as DataRowView; // replace with your row type
+                    if (row != null)
+                    {
+                        for (int i = 0; i < row.Row.ItemArray.Length; i++)
+                        {
+                            stringBuilder.Append(row.Row.ItemArray[i].ToString());
+                            if (i < row.Row.ItemArray.Length - 1)
+                            {
+                                stringBuilder.Append("\t"); // use tab as delimiter
+                            }
+                        }
+                        stringBuilder.AppendLine();
+                    }
+                }
+                Clipboard.SetText(stringBuilder.ToString());
+            }
         }
         private void releaseObject(object obj)
         {
@@ -147,25 +176,26 @@ namespace Dip.Pages
         }
         private void btExport_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Excel Documents (*.xls)|*.xlsx";
-            saveFileDialog.FileName = ".xls";
+            SaveFileDialog saveFileDialog = new SaveFileDialog { };
+            saveFileDialog.Filter = "Excel files (*.xls)|*.xlsx";
+            saveFileDialog.FileName = ".xlsx";
             if (saveFileDialog.ShowDialog() == true)
             {
                 copyAlltoClipboard();
 
+
                 object misValue = System.Reflection.Missing.Value;
                 Excel.Application ExcelFile = new Excel.Application();
 
-                ExcelFile.DisplayAlerts=true;
+                ExcelFile.DisplayAlerts = true;
                 Excel.Workbook workBook = ExcelFile.Workbooks.Add(misValue);
-                Excel.Worksheet workSheet = (Excel.Worksheet)workBook.Worksheets.GetEnumerator();
+                Excel.Worksheet workSheet = (Excel.Worksheet)workBook.Worksheets.get_Item(1);
 
-                Excel.Range PasteFromBuffer=(Excel.Range) workSheet.Cells[1,1];
+                Excel.Range PasteFromBuffer = (Excel.Range)workSheet.Cells[1, 1];
                 PasteFromBuffer.Select();
-                workSheet.PasteSpecial(PasteFromBuffer, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+                workSheet.PasteSpecial(PasteFromBuffer, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, true);
 
-                workBook.SaveAs(saveFileDialog.FileName, Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, 
+                workBook.SaveAs(saveFileDialog.FileName, Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue,
                     misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
 
                 ExcelFile.DisplayAlerts = true;
@@ -177,8 +207,8 @@ namespace Dip.Pages
                 releaseObject(ExcelFile);
 
                 Clipboard.Clear();
-              
-               if(File.Exists(saveFileDialog.FileName))
+
+                if (File.Exists(saveFileDialog.FileName))
                     System.Diagnostics.Process.Start(saveFileDialog.FileName);
             }
         }
