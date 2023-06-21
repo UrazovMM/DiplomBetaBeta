@@ -24,32 +24,43 @@ namespace Dip.Windows
     /// </summary>
     public partial class Auth : Window
     {
-        public static int autorizeID;
         public Auth()
         {
             InitializeComponent();
         }
 
-        public async Task<bool> AutorizeAsync(string UserLogin, string UserPasssword)
-        {
-            var user = await Task.Run(() =>
-            EfModel.Init().Workers.FirstOrDefaultAsync(p => p.Login == UserLogin && p.Password == UserPasssword));
-            return user != null;
-            
-            
-        }
+
         private void btAauth_Click(object sender, RoutedEventArgs e)
         {
-            try
+
+            if (tbLogin.Text == null || tbPass.Text == null)
             {
-                AutorizeAsync(tbLogin.Text, tbPass.Text);
-                MessageBox.Show("");
-                new MainWindow().Show();
+                MessageBox.Show("Все поля должны быть заполнены");
             }
-            catch
+            else
             {
-                MessageBox.Show("неверный логин или пароль");
+                Worker worker = EfModel.Init().Workers.FirstOrDefault(u => u.Login == tbLogin.Text && u.Password == tbPass.Text);
+                if (worker != null)
+                {
+                    if (worker.Position == 1)
+                    {
+                        MessageBox.Show("Здраствуйте");
+                        AddWorkerID.Worker(worker.WorkerId);
+                        new MainWindow().Show();
+                    }
+                    if (worker.Position == 2)
+                    {
+
+                        AddWorkerID.Worker(worker.WorkerId);
+                        new MainWindow().Show();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Неверный логин или пароль");
+                }
             }
         }
     }
 }
+

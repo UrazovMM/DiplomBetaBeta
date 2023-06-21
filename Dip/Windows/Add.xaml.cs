@@ -35,7 +35,7 @@ namespace Dip.Windows
                 DateCreate = dateAdd,
                 NameClient = tbNameClient.Text,
                 NameOrganisation = tbNameOrganisation.Text,
-                WorkerWorkerId = Auth.autorizeID
+                WorkerWorkerId = Convert.ToInt32(AddWorkerID.workerID)
             };
             EfModel.Init().Clients.Add(client);
             EfModel.Init().SaveChanges();

@@ -26,8 +26,11 @@ namespace Dip.Windows
             this.client = client;
             InitializeComponent();
             DataContext = client;
-            Cb_worker.ItemsSource = EfModel.Init().Clients.Include(p => p.WorkerWorker).Where(p => p.WorkerWorkerId == client.WorkerWorkerId).ToList();
+            Cb_worker.ItemsSource = EfModel.Init().Workers.ToList();
             UpdateNote();
+
+
+           
         }
         public void UpdateNote()
         {
@@ -52,9 +55,17 @@ namespace Dip.Windows
         {
             if (LvNOte.SelectedItems != null)
             {
-                string Note =LvNOte.SelectedItem.ToString();
+
+                string Note = LvNOte.SelectedItem.ToString();
                 tbNote.Text = Note;
             }
+
+        }
+
+        private void BtSaveClient_Click(object sender, RoutedEventArgs e)
+        {
+            
+            EfModel.Init().SaveChanges();
         }
     }
 }

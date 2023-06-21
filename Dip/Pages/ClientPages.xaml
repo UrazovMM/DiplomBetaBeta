@@ -23,7 +23,31 @@
             <Border CornerRadius="10">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Клиенты" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 10"/>
-                    <TextBox  Height="30" Width="500"  Name="Searchtb222" TextChanged="Search"/>
+
+                    <Border  CornerRadius="5">
+                        <Grid>
+                            <TextBox  Height="30" Width="500"  Name="Searchtb" TextChanged="Search" VerticalContentAlignment="Center"/>
+                            <TextBlock   Text="Поиск"  VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,15,0,0" IsHitTestVisible="False" Height="30" 
+                   FontSize="16" FontFamily="Fonts/#RobotoMono"  >
+
+
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed">
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName = Searchtb}" Value="">
+                                                <Setter Property="Visibility" Value="Visible">
+                                                </Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                    </Border>
+
+
                     <Button Content="Экспорт" Click="btExport_Click" Height="30" Margin="10 0" Style="{StaticResource Button}" Width="130" Cursor="Hand" FontSize="20"/>
                 </StackPanel>
             </Border>
@@ -72,7 +96,7 @@
             <Button Grid.Row="2" Content=" Добавить " Style="{StaticResource Button}" FontSize="30" HorizontalAlignment="Center" Click="btAdd_Click" Cursor="Hand"/>
         </StackPanel>
 
-        <DataGrid Name="dgw" Grid.Row="1" Visibility="Visible" AutoGenerateColumns="False">
+        <DataGrid Name="dgw" Grid.Row="1" Visibility="Collapsed" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="*" Binding="{Binding ClientId}" >
                     <DataGridTextColumn.Header >

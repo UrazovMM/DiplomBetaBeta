@@ -13,103 +13,66 @@
             <RowDefinition Height="4*"/>
         </Grid.RowDefinitions>
         <StackPanel>
-            <TextBlock Text="Авторизация" FontSize="30" VerticalAlignment="Center"
+            <TextBlock Text="Авторизация"  FontSize="30" VerticalAlignment="Center"
                        HorizontalAlignment="Center"/>
         </StackPanel>
         <StackPanel  Grid.Row="2" >
-            <TextBox Margin="0 20" Name="tbLogin">
-                <TextBox.Style>
-                    <Style TargetType="{x:Type TextBox}">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type TextBox}">
-                                    <Border CornerRadius="5"
+            <Border CornerRadius="5"
                             Background="#707eff"
                             Height="30"
                             Width="300">
+                <Grid>
+                    <TextBox x:Name="tbLogin" Height="30" Width="300" VerticalContentAlignment="Center" VerticalAlignment="Center"  Background="#707eff"/>
 
-                                        <Grid>
-                                            <TextBox Text="{TemplateBinding Text}"
-                                     Margin="2"
-                                     Background="Transparent"
-                                     VerticalContentAlignment="Center"
-                                     BorderThickness="0"
-                                     x:Name="tbLogin"/>
+                    <TextBlock  Margin="10 0 0 0" Text="Логин" IsHitTestVisible="False" Height="27" 
+                   FontSize="20" FontFamily="Fonts/#RobotoMono" Foreground="Black" >
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=tbLogin}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
 
-                                            <TextBlock IsHitTestVisible="False" 
-                                       FontFamily="Fonts/#RobotoMono"
-                                       Text="Логин" VerticalAlignment="Center"
-                                       HorizontalAlignment="Left" Margin="10 0"
-                                       FontSize="20">
+                </Grid>
+            </Border>
 
 
-                                                <TextBlock.Style>
-                                                    <Style TargetType="{x:Type TextBlock}">
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding Text, ElementName=tbLogin}" Value="">
-                                                                <Setter  Property="Visibility" Value="Visible"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                        <Setter Property="Visibility" Value="Hidden"/>
-
-                                                    </Style>
-                                                </TextBlock.Style>
-                                            </TextBlock>
-                                        </Grid>
-                                    </Border>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </TextBox.Style>
-            </TextBox>
-
-            <TextBox Margin="0 20" Name="tbPass" >
-                <TextBox.Style>
-                    <Style TargetType="{x:Type TextBox}">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type TextBox}">
-                                    <Border CornerRadius="5"
+            <Border Margin="0 30" CornerRadius="5"
                             Background="#707eff"
                             Height="30"
                             Width="300">
+                <Grid>
+                    <TextBox Background="#707eff" VerticalContentAlignment="Center"  Name="tbPass"  Height="30" Width="300" VerticalAlignment="Center"/>
 
-                                        <Grid>
-                                            <TextBox Text="{TemplateBinding Text}"
-                                     Margin="2"
-                                     Background="Transparent"
-                                     VerticalContentAlignment="Center"
-                                     BorderThickness="0"
-                                     x:Name="tbLogin"/>
+                    <TextBlock   Text="Пароль"  VerticalAlignment="Center"  Margin="17 0 0 0" IsHitTestVisible="False" Height="27" 
+                   FontSize="20"   >
 
-                                            <TextBlock IsHitTestVisible="False" 
-                                       FontFamily="Fonts/#RobotoMono"
-                                       Text="Пароль" VerticalAlignment="Center"
-                                       HorizontalAlignment="Left" Margin="10 0"
-                                       FontSize="20">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed">
+
+                                </Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName = tbPass}" Value="">
+                                        <Setter Property="Visibility" Value="Visible">
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+
+                </Grid>
+            </Border>
 
 
-                                                <TextBlock.Style>
-                                                    <Style TargetType="{x:Type TextBlock}">
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding Text, ElementName=tbLogin}" Value="">
-                                                                <Setter  Property="Visibility" Value="Visible"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                        <Setter Property="Visibility" Value="Hidden"/>
 
-                                                    </Style>
-                                                </TextBlock.Style>
-                                            </TextBlock>
-                                        </Grid>
-                                    </Border>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </TextBox.Style>
-            </TextBox>
+
             <Button Width="250" Height="30" Content="Войти" Style="{StaticResource Button}" FontSize="20" Click="btAauth_Click"/>
         </StackPanel>
     </Grid>

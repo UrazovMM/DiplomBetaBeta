@@ -7,8 +7,8 @@ namespace Dip
 {
     public partial class EfModel : DbContext
     {
-        private static EfModel _instance;
-        public static EfModel Init() => _instance ?? (_instance = new EfModel());
+        private static EfModel _instanse;
+        public static EfModel Init() => _instanse ?? (_instanse = new EfModel());
         public EfModel()
         {
         }
@@ -22,6 +22,7 @@ namespace Dip
         public virtual DbSet<Client> Clients { get; set; } = null!;
         public virtual DbSet<MigrationHistory> MigrationHistories { get; set; } = null!;
         public virtual DbSet<Note> Notes { get; set; } = null!;
+        public virtual DbSet<Position> Positions { get; set; } = null!;
         public virtual DbSet<Worker> Workers { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -106,9 +107,25 @@ namespace Dip
                     .HasForeignKey(d => d.ClientClientId);
             });
 
+            modelBuilder.Entity<Position>(entity =>
+            {
+                entity.HasKey(e => e.IdPosition)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("Position");
+
+                entity.Property(e => e.IdPosition).HasColumnName("idPosition");
+
+                entity.Property(e => e.NamePosition)
+                    .HasMaxLength(45)
+                    .HasColumnName("namePosition");
+            });
+
             modelBuilder.Entity<Worker>(entity =>
             {
                 entity.ToTable("Worker");
+
+                entity.HasIndex(e => e.Position, "Positin _idx");
 
                 entity.Property(e => e.WorkerId).HasColumnName("WorkerID");
 
@@ -116,6 +133,11 @@ namespace Dip
                     .HasMaxLength(128)
                     .UseCollation("utf8mb3_general_ci")
                     .HasCharSet("utf8mb3");
+
+                entity.HasOne(d => d.PositionNavigation)
+                    .WithMany(p => p.Workers)
+                    .HasForeignKey(d => d.Position)
+                    .HasConstraintName("Position");
             });
 
             OnModelCreatingPartial(modelBuilder);

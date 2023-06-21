@@ -21,6 +21,7 @@ using System.Diagnostics;
 using Microsoft.Win32;
 using System.IO;
 using System.Data;
+using Dip.Class;
 
 namespace Dip.Pages
 {
@@ -33,23 +34,18 @@ namespace Dip.Pages
         {
             InitializeComponent();
             ((Storyboard)CircleLoading.Resources["CircleLoad"]).RepeatBehavior = RepeatBehavior.Forever;
-            ((Storyboard)CircleLoading.Resources["CircleLoad"]).SpeedRatio = 8;
+            ((Storyboard)CircleLoading.Resources["CircleLoad"]).SpeedRatio = 10;
             ((Storyboard)CircleLoading.Resources["CircleLoad"]).Begin();
+            // dgw.ItemsSource = EfModel.Init().Clients.ToList();
             UpdateData();
 
         }
         private async void StartAnimation()
         {
-            await Task.Run(() =>
-            {
-                ((Storyboard)CircleLoading.Resources["CircleLoad"]).RepeatBehavior = RepeatBehavior.Forever;
-                ((Storyboard)CircleLoading.Resources["CircleLoad"]).SpeedRatio = 8;
-                ((Storyboard)CircleLoading.Resources["CircleLoad"]).Begin();
-
-            }
-            );
+            ((Storyboard)CircleLoading.Resources["CircleLoad"]).RepeatBehavior = RepeatBehavior.Forever;
+            ((Storyboard)CircleLoading.Resources["CircleLoad"]).SpeedRatio = 8;
+            ((Storyboard)CircleLoading.Resources["CircleLoad"]).Begin();
         }
-
         private void StopAnimation()
         {
             ((Storyboard)CircleLoading.Resources["CircleLoad"]).Stop();
@@ -58,32 +54,12 @@ namespace Dip.Pages
 
 
 
-        //2:75 
-        //private void LoadData()
-        //{
-        //    Thread LoadingData = new Thread(UpdateData);
-        //    LoadingData.Start(UpdateData);
-
-        //}
-        //public void UpdateData()
-        //{
-        //    IEnumerable<Client> Clients = EfModel.Init().Clients.Include(p => p.WorkerWorker).Where(p => p.NameClient.Contains(Searchtb222.Text)).ToList();
-        //    List.ItemsSource = Clients;
-
-        //    StopAnimation();
-
-
-        //    dgw.ItemsSource = EfModel.Init().Clients.ToList();
-        //}
-
-
-        //// 2:89 time
         public async Task UpdateData()
         {
 
             try
             {
-                var clients = await EfModel.Init().Clients.Where(p => p.NameClient.Contains(Searchtb222.Text)).ToListAsync();
+                var clients = await EfModel.Init().Clients.Where(p=>p.WorkerWorkerId==AddWorkerID.workerID).Where(p => p.NameClient.Contains(Searchtb.Text)).ToListAsync();
 
                 List.ItemsSource = clients;
 
@@ -111,7 +87,7 @@ namespace Dip.Pages
 
         private void UpdateChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            UpdateData();
+           UpdateData();
         }
 
         private void btDelete_Click(object sender, RoutedEventArgs e)
@@ -176,42 +152,52 @@ namespace Dip.Pages
         }
         private void btExport_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog { };
-            saveFileDialog.Filter = "Excel files (*.xls)|*.xlsx";
-            saveFileDialog.FileName = ".xlsx";
-            if (saveFileDialog.ShowDialog() == true)
+            try
             {
-                copyAlltoClipboard();
+            SaveFileDialog saveFileDialog = new SaveFileDialog { };
+            saveFileDialog.Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*";
+                //saveFileDialog.FileName = ".xlsx";
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    copyAlltoClipboard();
 
-                object misValue = System.Reflection.Missing.Value;
-                Excel.Application ExcelFile = new Excel.Application();
+                    object misValue = System.Reflection.Missing.Value;
+                    Excel.Application ExcelFile = new Excel.Application();
 
-                ExcelFile.DisplayAlerts = true;
-                Excel.Workbook workBook = ExcelFile.Workbooks.Add(misValue);
-                Excel.Worksheet workSheet = (Excel.Worksheet)workBook.Worksheets.get_Item(1);
+                    ExcelFile.DisplayAlerts = true;
 
-                Excel.Range PasteFromBuffer = (Excel.Range)workSheet.Cells[1, 1];
-                PasteFromBuffer.Select();
-                workSheet.PasteSpecial(PasteFromBuffer, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, true);
+                    Excel.Workbook workBook = ExcelFile.Workbooks.Add(misValue);
+                    Excel.Worksheet workSheet = (Excel.Worksheet)workBook.Worksheets.get_Item(1);
 
-                workBook.SaveAs(saveFileDialog.FileName, Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue,
-                    misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+                    Excel.Range PasteFromBuffer = (Excel.Range)workSheet.Cells[1, 1];
+                    PasteFromBuffer.Select();
+                    workSheet.PasteSpecial(PasteFromBuffer, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, true);
 
-                ExcelFile.DisplayAlerts = true;
-                workBook.Close(true, misValue, misValue);
-                ExcelFile.Quit();
+                    workBook.SaveAs(saveFileDialog.FileName);
+                    //workBook.SaveAs(saveFileDialog.FileName, Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue,
+                    //    misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
 
-                releaseObject(workBook);
-                releaseObject(workSheet);
-                releaseObject(ExcelFile);
+                    ExcelFile.DisplayAlerts = true;
+                    workBook.Close(true, misValue, misValue);
+                    ExcelFile.Quit();
 
-                Clipboard.Clear();
+                    releaseObject(workBook);
+                    releaseObject(workSheet);
+                    releaseObject(ExcelFile);
 
-                if (File.Exists(saveFileDialog.FileName))
-                    System.Diagnostics.Process.Start(saveFileDialog.FileName);
-              
-               
+                    Clipboard.Clear();
+
+                    if (File.Exists(saveFileDialog.FileName))
+                        System.Diagnostics.Process.Start(saveFileDialog.FileName);
+
+                }
+
             }
+            catch (Exception ex)
+            {
+
+            }
+
         }
     }
 }

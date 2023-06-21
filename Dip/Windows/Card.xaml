@@ -39,7 +39,9 @@
                         <TextBox Text="{Binding NameOrganisation}" Margin="0 2 0 0"/>
                         <TextBox Text="{Binding Phone}"  Margin="0 2 0 0"/>
                         <TextBox Text="{Binding Mail}" Margin="0 2 0 0"/>
-                        <!--починить вывод-->
+                        
+                            <!--починить вывод-->
+                        
                         <ComboBox Name="Cb_worker" IsEnabled="True" IsReadOnly="False" >
                             <ComboBox.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -49,14 +51,14 @@
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Vertical">
-                                        <TextBlock Text="{Binding WorkerWorker.NameWorker}"/>
+                                        <TextBlock Text="{Binding NameWorker}"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
                                                
                     </StackPanel>
-                    <Button VerticalAlignment="Bottom" Content="Сохранить"  Margin="2 2" Cursor="Hand" Style="{StaticResource Button}" FontSize="15"/>
+                    <Button VerticalAlignment="Bottom" Content="Сохранить"  Click="BtSaveClient_Click" Margin="2 2" Cursor="Hand" Style="{StaticResource Button}" FontSize="15"/>
                 </Grid>
             </Border>
         </Grid>
@@ -66,7 +68,7 @@
                 <RowDefinition Height="0.15*"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <ListView Name="LvNOte" Margin="5 0" BorderThickness="1" SelectionChanged="SelectionNote"  >
+            <ListView Name="LvNOte" Margin="5 0" BorderThickness="1" SelectionChanged="SelectionNote">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Notes}"/>
@@ -84,7 +86,7 @@
             <TextBlock Text="Примечание" Grid.Row="1" FontSize="12" Margin="10 0" TextDecorations="Underline"/>
             <Border Grid.Row="2" CornerRadius="4">
                 <Grid>
-                        <TextBox Name="tbNote" Height="100" Width="580" BorderThickness="1"   Style="{StaticResource TextBoxNote}" />
+                        <TextBox Name="tbNote" Height="100" Width="580" BorderThickness="1"   />
 
                         <Button Content="Добавить" Height="25" Width="60"
                                         Background="Gray" x:Name="btNote" 
