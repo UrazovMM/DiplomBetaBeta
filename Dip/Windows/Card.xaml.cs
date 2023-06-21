@@ -56,8 +56,8 @@ namespace Dip.Windows
             if (LvNOte.SelectedItems != null)
             {
 
-                string Note = LvNOte.SelectedItem.ToString();
-                tbNote.Text = Note;
+                Note note = LvNOte.SelectedItem as Note;
+                tbNote.Text = note.Notes;
             }
 
         }
@@ -66,6 +66,18 @@ namespace Dip.Windows
         {
             
             EfModel.Init().SaveChanges();
+            MessageBox.Show("Изменения сохранены");
+        }
+
+        private void btDelete_Note(object sender, RoutedEventArgs e)
+        {
+            if (LvNOte.SelectedItem != null)
+            {
+                Note note = LvNOte.SelectedItem as Note;
+                EfModel.Init().Remove(note);
+                EfModel.Init().SaveChanges();
+            }
+            UpdateNote();
         }
     }
 }

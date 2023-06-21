@@ -16,11 +16,22 @@
                 <RowDefinition/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
-            <TextBlock>
+            <StackPanel>
+
+                <TextBlock>
                 <Run Text="ID"/>
                 <Run Text="{Binding ClientId}"/>
-            </TextBlock>
+                </TextBlock>
+                <TextBlock>
+                <Run Text="Дата прихода:"/>
+                <Run Text="{Binding DateCreate, StringFormat=dd-MMMM-yyyy }"/>
+                </TextBlock>
 
+                <TextBlock>
+                <Run Text="Время:"/>
+                <Run Text="{Binding DateCreate, StringFormat=HH:MM  }"/>
+                </TextBlock>
+            </StackPanel>
             <Border Grid.Row="1" BorderThickness="1">
                 <Grid Grid.Row="1" Background="White" >
                     <Grid.ColumnDefinitions>
@@ -103,6 +114,7 @@
                                 </Style>
                             </Button.Style>
                         </Button>
+                    <Button Content="Удалить" Height="25" Width="60" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="btDelete_Note" Margin="0,0,-2,0"/>
                     </Grid>
             </Border>
         </Grid>
